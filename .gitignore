@@ -5,3 +5,8 @@
 .terraform.lock.hcl
 terraform.tfvars
 tfplan
+
+# Logs and other large files
+*.zip
+*.log
+*.bin
