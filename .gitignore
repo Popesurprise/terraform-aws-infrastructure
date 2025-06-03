@@ -10,3 +10,15 @@ tfplan
 *.zip
 *.log
 *.bin
+
+# Ignore Terraform local files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+*.tfvars.json
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
