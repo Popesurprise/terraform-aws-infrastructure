@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read      # Allow reading the repository contents
+  id-token: write     # Required for OIDC authentication
+
 jobs:
   terraform:
     name: 'Terraform Plan and Apply'
@@ -16,12 +20,17 @@ jobs:
     env:
       AWS_REGION: us-east-1
       TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
-      TF_VAR_db_username: ${{ secrets.DB_USERNAME }}  # If username is also sensitive or variable
-
+      TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::171100165880:role/TerraformPlanAndApplyRole
+          aws-region: us-east-1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
