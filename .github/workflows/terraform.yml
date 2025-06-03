@@ -4,27 +4,24 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'terraform/**'
   pull_request:
     branches:
       - main
-    paths:
-      - 'terraform/**'
+  workflow_dispatch:
 
 permissions:
-  contents: read      # Allow reading the repository contents
-  id-token: write     # Required for OIDC authentication
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: us-east-1
+  TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+  TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
 
 jobs:
   terraform:
-    name: 'Terraform Plan and Apply'
+    name: Terraform Plan and Apply
     runs-on: ubuntu-latest
-
-    env:
-      AWS_REGION: us-east-1
-      TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
-      TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
 
     steps:
       - name: Checkout code
